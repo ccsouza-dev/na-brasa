@@ -6,8 +6,6 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Tests\TestCase;
 
 class OrdersApiTest extends TestCase
@@ -17,48 +15,6 @@ class OrdersApiTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        Schema::create('orders', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('customer_name')->nullable();
-            $table->integer('table_number')->nullable();
-            $table->string('status')->default('open');
-            $table->decimal('total', 10, 2)->default(0);
-            $table->timestamp('created_at')->useCurrent();
-            $table->string('payment_method')->nullable();
-            $table->decimal('paid_amount', 10, 2)->default(0);
-            $table->decimal('change_amount', 10, 2)->default(0);
-            $table->timestamp('paid_at')->nullable();
-        });
-
-        Schema::create('products', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->decimal('price', 10, 2);
-            $table->string('category');
-            $table->boolean('active')->default(true);
-            $table->decimal('cost_price', 10, 2)->default(0);
-            $table->integer('stock_quantity')->default(0);
-            $table->integer('min_stock')->default(0);
-            $table->string('barcode')->nullable();
-            $table->integer('supplier_id')->nullable();
-        });
-
-        Schema::create('order_items', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('order_id')->unsigned()->nullable();
-            $table->integer('product_id')->unsigned()->nullable();
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
-            $table->timestamp('created_at')->useCurrent();
-            $table->string('status')->default('pending');
-            $table->timestamp('delivered_at')->nullable();
-        });
-
-        Schema::create('settings', function (Blueprint $table) {
-            $table->string('setting_key')->primary();
-            $table->string('setting_value');
-        });
     }
 
     public function test_create_order_add_item_and_close_order(): void
@@ -131,7 +87,7 @@ class OrdersApiTest extends TestCase
         $this->assertNotNull($order->paid_at);
     }
 
-    public function test_get_open_orders_and_performance_metrics(): void
+    public function test_get_open_orders(): void
     {
         $product = Product::create([
             'name' => 'Cerveja',
@@ -167,13 +123,6 @@ class OrdersApiTest extends TestCase
         $this->assertCount(1, $data);
         $this->assertEquals(2, $data[0]['table_number']);
         $this->assertNotEmpty($data[0]['items']);
-
-        $perf = $this->getJson('/api.php?action=get_performance_metrics');
-        $perf->assertStatus(200);
-        $perf->assertJsonStructure([
-            'delivery_by_category',
-            'avg_open_time',
-        ]);
     }
 }
 

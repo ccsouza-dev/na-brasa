@@ -4,6 +4,8 @@ Sistema de controle de mesas, estoque, caixa e fiado do bar Espetinhos da Jaque 
 
 Não há tela de login. Quem abre o endereço entra direto na operação.
 
+Quem baixou o código cria o banco na primeira visita, depois de copiar o `.env` e gerar a chave. O passo a passo está no README do repositório. O MySQL precisa estar ligado. O sistema cria o banco `na_brasa_db`, as tabelas e o cardápio.
+
 ## 1. Como abrir
 
 1. No XAMPP, deixe o Apache e o MySQL ligados.
