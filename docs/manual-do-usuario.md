@@ -2,23 +2,52 @@
 
 Sistema de controle de mesas, estoque, caixa e fiado do bar Espetinhos da Jaque (projeto Na Brasa).
 
+O código público está em [https://github.com/ccsouza-dev/na-brasa](https://github.com/ccsouza-dev/na-brasa).
+
 Não há tela de login. Quem abre o endereço entra direto na operação.
 
-Quem baixou o código cria o banco na primeira visita, depois de copiar o `.env` e gerar a chave. O passo a passo está no README do repositório. O MySQL precisa estar ligado. O sistema cria o banco `na_brasa_db`, as tabelas e o cardápio.
+O repositório traz o programa e o cardápio. Não traz pedidos, fiado, despesas nem a senha do ambiente. Na primeira execução o sistema cria o banco MySQL `na_brasa_db`, as tabelas e 40 produtos, cada um com 30 unidades em estoque.
 
-## 1. Como abrir
+A tela usa HTML, CSS e JavaScript. O servidor é Laravel (PHP), no padrão MVC. O banco é relacional, MySQL.
 
-1. No XAMPP, deixe o Apache e o MySQL ligados.
-2. No computador do caixa, abra o navegador em:
+## 1. Instalação
 
-   `http://localhost/Na_Brasa/public`
+É preciso PHP 8.2 ou mais novo, Composer e MySQL. No XAMPP, ligue o Apache e o MySQL antes de começar.
 
+1. Baixe o projeto:
+
+   `git clone https://github.com/ccsouza-dev/na-brasa.git`
+
+2. Entre na pasta. Se for usar o Apache do XAMPP, deixe a pasta dentro de `C:\xampp\htdocs`.
+3. Instale as bibliotecas e prepare o ambiente. No prompt, dentro da pasta do projeto:
+
+   ```
+   composer install
+   copy .env.example .env
+   php artisan key:generate
+   php artisan na-brasa:install
+   ```
+
+   No Windows, se `php` não for reconhecido, troque `php` por `C:\xampp\php\php.exe`.
+
+4. O arquivo `.env` já aponta para o MySQL local: banco `na_brasa_db`, usuário `root`, senha vazia, que é o padrão do XAMPP. Se o MySQL tiver senha, preencha `DB_PASSWORD` nesse arquivo antes do comando `na-brasa:install`.
+
+O comando `na-brasa:install` cria o banco, as tabelas e o cardápio. Quem gerar a chave e só abrir o site também dispara essa criação na primeira visita, desde que o MySQL esteja ligado.
+
+## 2. Como abrir
+
+1. Com o Apache e o MySQL ligados, abra o navegador.
+2. Se a pasta estiver em `C:\xampp\htdocs\na-brasa`, o endereço é:
+
+   `http://localhost/na-brasa/public`
+
+   Se a pasta se chamar `Na_Brasa`, troque o nome na URL: `http://localhost/Na_Brasa/public`.
 3. A primeira tela é a **Gestão**. No topo ficam os atalhos **Mobile**, **Estoque**, **Financeiro** e **Caderneta**.
 4. O valor **Em aberto** mostra a soma de todas as mesas ocupadas.
 
 O salão tem 20 mesas, numeradas de 1 a 20.
 
-## 2. Gestão das mesas
+## 3. Gestão das mesas
 
 Cada mesa aparece como um cartão.
 
@@ -55,7 +84,7 @@ A lixeira exclui a comanda inteira. Os itens voltam para o estoque. Essa ação 
    - **Caderneta (fiado)**: informe a data prevista de pagamento. O padrão é 30 dias. A conta passa para a tela Caderneta e não entra como dinheiro recebido na hora.
 3. Clique em **Confirmar Pagamento**.
 
-## 3. Celular do salão
+## 4. Celular do salão
 
 No computador, clique em **Mobile**. Aparece um QR Code com o endereço do celular. O aparelho precisa estar no mesmo Wi-Fi.
 
@@ -70,7 +99,7 @@ O app se chama **Controle de Comandas**.
 
 O ícone da câmera lê o QR Code de uma NFC-e. A nota não entra sozinha no financeiro: ela fica pendente para o caixa conferir no computador.
 
-## 4. Notas vindas do celular
+## 5. Notas vindas do celular
 
 Quando o celular envia uma NFC-e, o computador mostra um aviso amarelo: “Há nota(s) pendente(s) enviada(s) pelo celular”.
 
@@ -80,7 +109,7 @@ Quando o celular envia uma NFC-e, o computador mostra um aviso amarelo: “Há n
 
 No computador, a câmera de NFC-e também aparece no botão flutuante quando a Gestão é aberta numa tela estreita.
 
-## 5. Estoque
+## 6. Estoque
 
 Abra **Estoque**. Os produtos ficam separados em **Bebidas**, **Espetinhos** e **Outros**. A tabela mostra nome, código EAN, custo, preço de venda e quantidade.
 
@@ -104,7 +133,7 @@ Na linha do produto, abra a edição.
 
 Clique em **Salvar**.
 
-## 6. Financeiro
+## 7. Financeiro
 
 Abra **Financeiro**. À esquerda ficam **Visão Geral**, **Receitas** e **Despesas**.
 
@@ -148,7 +177,7 @@ Para uma nota fiscal:
 
 O histórico permite editar ou excluir a despesa.
 
-## 7. Caderneta
+## 8. Caderneta
 
 Abra **Caderneta**. A lista junta, por cliente, todas as comandas fechadas como fiado.
 
@@ -161,7 +190,7 @@ Cada linha mostra a última compra, a previsão de pagamento, o nome, o total e 
 
 **Atualizar** recarrega a lista.
 
-## 8. Rotina sugerida do dia
+## 9. Rotina sugerida do dia
 
 1. Ligue Apache e MySQL e abra a Gestão.
 2. Abra as mesas conforme os clientes sentam e lance os pedidos pelo caixa ou pelo celular.
