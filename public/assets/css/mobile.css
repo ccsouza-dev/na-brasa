@@ -1,0 +1,29 @@
+/* Ajustes finos para sensação de App */
+body { 
+    -webkit-tap-highlight-color: transparent; 
+    position: relative;
+}
+
+/* Force Uppercase Inputs */
+input:not([type="password"]):not([type="email"]), textarea, select {
+    text-transform: uppercase !important;
+}
+/* Fundo com Logo bem levinho */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../Jaque.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%; /* Ajuste para não cortar muito */
+    opacity: 0.1; /* Bem suave */
+    z-index: -1;
+    pointer-events: none;
+}
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
