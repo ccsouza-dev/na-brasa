@@ -3,3 +3,5 @@
 Sistema de mesas, comandas, estoque, financeiro e caderneta (fiado) do bar Espetinhos da Jaque.
 
 O manual de uso, com instalação e operação, está em [docs/manual-do-usuario.md](docs/manual-do-usuario.md).
+
+O dicionário do banco MySQL `na_brasa_db` está em [docs/dicionario-de-dados.md](docs/dicionario-de-dados.md).

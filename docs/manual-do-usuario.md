@@ -34,6 +34,8 @@ A tela usa HTML, CSS e JavaScript. O servidor é Laravel (PHP), no padrão MVC. 
 
 O comando `na-brasa:install` cria o banco, as tabelas e o cardápio. Quem gerar a chave e só abrir o site também dispara essa criação na primeira visita, desde que o MySQL esteja ligado.
 
+O dicionário de dados do banco físico está em [dicionario-de-dados.md](dicionario-de-dados.md). Ele lista cada tabela do `na_brasa_db`, com tipo, tamanho, se aceita nulo, chave e o significado da coluna.
+
 ## 2. Como abrir
 
 1. Com o Apache e o MySQL ligados, abra o navegador.
